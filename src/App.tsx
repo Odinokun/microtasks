@@ -1,33 +1,27 @@
+import React from 'react';
 import './App.css';
-import { Header } from './components/Header';
-import { Body } from './components/Body';
-import { Footer } from './components/Footer';
+import { Button } from './components/Button';
 
 function App() {
-  const students = [
-    { id: 1, name: 'James', age: 8 },
-    { id: 2, name: 'Robert', age: 18 },
-    { id: 3, name: 'John', age: 28 },
-    { id: 4, name: 'Michael', age: 38 },
-    { id: 5, name: 'William', age: 48 },
-    { id: 6, name: 'David', age: 58 },
-    { id: 7, name: 'Richard', age: 68 },
-    { id: 8, name: 'Joseph', age: 78 },
-    { id: 9, name: 'Thomas', age: 88 },
-    { id: 10, name: 'Charles', age: 98 },
-    { id: 11, name: 'Christopher', age: 100 },
-  ];
+  const ButtonFoo = (name: string, age: number) => {
+    console.log('user ' + name + ' clicked! My age is ' + age + ' years old.');
+  };
 
-  const topCars = [
-    { manufacturer: 'BMW', model: 'm5cs' },
-    { manufacturer: 'Mercedes', model: 'e63s' },
-    { manufacturer: 'Audi', model: 'rs6' },
-  ];
+  const StupidBtn = () => {
+    console.log('Stupid button clicked!');
+  };
+
   return (
     <div className='App'>
-      <Header title='My first page title' />
-      <Body students={students} cars={topCars} />
-      <Footer />
+      <Button
+        title='My 1 super button'
+        callback={() => ButtonFoo('John', 21)}
+      />
+      <Button
+        title='My 2 super button'
+        callback={() => ButtonFoo('Michael', 44)}
+      />
+      <Button title='Stupid button' callback={StupidBtn} />
     </div>
   );
 }
