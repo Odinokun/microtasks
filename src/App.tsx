@@ -1,39 +1,53 @@
 import React, { useState } from 'react';
 import './App.css';
-import { NewComponent } from './NewComponent';
+import { FullInput } from './components/FullInput';
+import { Input } from './components/Input';
+import { Button } from './components/Button';
 
-export type FilterType = 'All' | 'Dollars' | 'CAD';
+interface IMessage {
+  message: string;
+}
 
 function App() {
-  const [banknots, setBanknots] = useState<FilterType>('All');
-  const money = [
-    { banknots: 'Dollars', value: 100, number: ' a1234567890' },
-    { banknots: 'Dollars', value: 50, number: ' z1234567890' },
-    { banknots: 'CAD', value: 100, number: ' w1234567890' },
-    { banknots: 'Dollars', value: 100, number: ' e1234567890' },
-    { banknots: 'Dollars', value: 50, number: ' c1234567890' },
-    { banknots: 'CAD', value: 100, number: ' r1234567890' },
-    { banknots: 'Dollars', value: 50, number: ' x1234567890' },
-    { banknots: 'CAD', value: 50, number: ' v1234567890' },
-  ];
+  let [messageArr, setMessageArr] = useState<IMessage[]>([
+    { message: 'message 1' },
+    { message: 'message 2' },
+    { message: 'message 3' },
+  ]);
 
-  let currentMoney = money;
-  if (banknots === 'Dollars') {
-    currentMoney = money.filter((item: any) => item.banknots === 'Dollars');
-  } else if (banknots === 'CAD') {
-    currentMoney = money.filter((item: any) => item.banknots === 'CAD');
-  }
+  const [singleInputValue, setSingleInputValue] = useState<string>('');
 
-  const onClickFilterHandler = (buttonName: FilterType) => {
-    setBanknots(buttonName);
+  const addMessage = (message: string) => {
+    setMessageArr([{ message: message }, ...messageArr]);
+  };
+
+  // single button callback
+  const handleButtonClick = () => {
+    addMessage(singleInputValue);
+    setSingleInputValue('');
   };
 
   return (
     <div className='App'>
-      <NewComponent
-        currentMoney={currentMoney}
-        onClickFilterHandler={onClickFilterHandler}
-      />
+      <h3>FullInput</h3>
+      <FullInput addMessage={addMessage} />
+
+      {/* ***************************************** */}
+
+      <h3>SingleInput + Button</h3>
+      <div>
+        <Input
+          singleInputValue={singleInputValue}
+          setSingleInputValue={setSingleInputValue}
+        />
+        <Button title='add task' callback={handleButtonClick} />
+      </div>
+
+      {/* ***************************************** */}
+
+      {messageArr.map((item, index) => {
+        return <div key={index}>{item.message}</div>;
+      })}
     </div>
   );
 }
